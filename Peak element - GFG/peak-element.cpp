@@ -15,13 +15,16 @@ class Solution
     int peakElement(int arr[], int n)
     {
        // Your code here
-       int k=0;
-       for(int i=0;i<n-1;i++){
-           if(arr[i]<arr[i+1]){
-               k=i+1;
-           }
-       }
-       return k;
+       int index = -1;
+        int largest = -1;
+        
+        for(int i=0; i<n; i++){
+            if(arr[i]>largest){
+                index = i;
+                largest = arr[i];
+            }
+        }
+        return index;
     }
 };
 

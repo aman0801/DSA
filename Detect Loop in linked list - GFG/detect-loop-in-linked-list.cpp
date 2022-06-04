@@ -48,7 +48,8 @@ class Solution
     //Function to check if the linked list has a loop.
     bool detectLoop(Node* head)
     {
-        struct Node *fast=head;
+        // your code here
+         struct Node *fast=head;
         struct Node *slow=head;
         while(fast!=NULL && fast->next!=NULL){
             slow=slow->next;

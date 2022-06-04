@@ -84,7 +84,7 @@ struct Node {
 int intersectPoint(Node* head1, Node* head2)
 {
     // Your Code Here
-    struct Node *curr1=head1;
+     struct Node *curr1=head1;
     struct Node *curr2=head2;
     int count1=0;
     int count2=0;
@@ -116,7 +116,5 @@ int intersectPoint(Node* head1, Node* head2)
             return curr1->data;
         }
         return -1;
-        
-    
 }
 

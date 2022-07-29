@@ -15,6 +15,6 @@ public:
         }
         a.push_back(sum);
         a.push_back(sum1);
-        return a;
+        return {sum,sum1};
     }
 };

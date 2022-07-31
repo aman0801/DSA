@@ -9,22 +9,26 @@ public:
         
         int x=0;
         int y=0;
-       vector<vector<int>> ans(r,vector<int>(c,0));
-        // vector<int>temp(26,6);
+       // vector<vector<int>> ans(r,vector<int>(c,0));
+      vector<vector<int>> ans;
+
+        vector<int>temp;
         
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
-                ans[x][y]=mat[i][j];
+                temp.push_back(mat[i][j]);
                 
                 y++;
                 
                
                 if(y==c)
-                {
+                {   
+                    ans.push_back(temp);
+                    temp.erase(temp.begin(),temp.end());
                      y=0;
-                    x++;
+                    // x++;
                 }
                    
             }

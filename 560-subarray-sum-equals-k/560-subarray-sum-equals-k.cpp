@@ -13,11 +13,7 @@ public:
             if(mp.find(sum-k)!=mp.end()){
                 count=mp[sum-k]+count;
             }
-            if(mp.find(sum)!=mp.end()){
-                mp[sum]++;
-            }else{
-                mp[sum]=1;
-            }
+            mp[sum]++;
         }
         return count;
     }

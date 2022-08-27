@@ -28,10 +28,10 @@ public:
             if(i.second==1){
                 //Node
             ListNode* x= new ListNode(i.first);
-               curr->next=x; 
+                curr->next=x; 
                 curr=curr->next;
             }
         }
-        return c->next;
+        return dummy->next;
     }
 };

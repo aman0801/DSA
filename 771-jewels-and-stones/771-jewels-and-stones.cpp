@@ -10,7 +10,7 @@ public:
         
         for(int i=0;i<s.size();i++){
             if(mp.find(s[i])!=mp.end()){
-                mp[s[i]]+=1;
+                // mp[s[i]]+=1;
                 c++;
             }
         }

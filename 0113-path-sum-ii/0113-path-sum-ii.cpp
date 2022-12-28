@@ -11,7 +11,9 @@
  */
 class Solution {
 public:
-    void find(TreeNode* root, int targetSum, int y, vector<vector<int>>&ans, vector<int>&path){
+     vector<vector<int>>ans;
+        vector<int>path;
+    void find(TreeNode* root, int targetSum, int y){
         if(root == NULL)return;
         y = y+root->val;
          path.push_back(root->val);
@@ -20,17 +22,15 @@ public:
             ans.push_back(path);
             }
         }else{
-            find(root->left, targetSum, y, ans, path);
-            find(root->right, targetSum, y, ans, path);
+            find(root->left, targetSum, y);
+            find(root->right, targetSum, y);
         }
         path.pop_back();
     }
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         // int y = 0;
-        vector<vector<int>>ans;
-        vector<int>path;
-        // ans.clear();
-        find(root, targetSum, 0, ans, path);
+        ans.clear();
+        find(root, targetSum, 0);
         return ans;
     }
 };

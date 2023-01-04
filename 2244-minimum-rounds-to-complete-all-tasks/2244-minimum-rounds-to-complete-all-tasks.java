@@ -1,21 +1,19 @@
 class Solution {
-public:
-    int minimumRounds(vector<int>& tasks) {
-         unordered_map<int, int> mp;
-        int count = 0;
-        for (int i : tasks) {
-            mp[i]++;
+    public int minimumRounds(int[] tasks) {
+        Map<Integer, Integer>mp = new HashMap();
+        for(int i: tasks){
+            mp.put(i, mp.getOrDefault(i, 0)+1);
         }
+        int ans = 0;
         
-        for(auto i: mp){
-            if(i.second == 1)return -1;
-            if(i.second%3 == 0){
-                count = count + i.second/3;
-            }else{
-                count = count + i.second/3 + 1;
-            }
+        for(int count: mp.values()){
+            if(count == 1)return -1;
+            if (count % 3 == 0) {
+                ans += count / 3;
+            } else {
+                ans += count / 3 + 1;
         }
-        return count;
-        
     }
-};
+    return ans;
+  }
+}

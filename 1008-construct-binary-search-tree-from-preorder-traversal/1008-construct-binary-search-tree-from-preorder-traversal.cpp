@@ -11,21 +11,28 @@
  */
 class Solution {
 public:
-    
-    TreeNode* find(TreeNode*root, int val){
-       if(!root)   return new TreeNode(val);
-        if(val>root->val){
-          root->right = find(root->right, val);
-        }else{
-          root->left = find(root->left, val);
-        }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        return partitionAndResolve(0, preorder.size()-1, preorder);
+    }
+
+private:
+    TreeNode* partitionAndResolve(int low, int high, vector<int>& preorder) {
+        if (low > high) return nullptr;
+
+        int pivot = findPivot(low, high, preorder);
+        TreeNode* root = new TreeNode(preorder[low]);
+        root->left = partitionAndResolve(low + 1, pivot, preorder);
+        root->right = partitionAndResolve(pivot + 1, high, preorder);
+
         return root;
     }
-    
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        TreeNode* root = NULL;
-        for(int x:preorder)    root = find(root,x);
-        return root;
+
+    int findPivot(int low, int high, vector<int>& preorder) {
+        int element = preorder[low];
+        low++;
+        while (low <= high && element >= preorder[low]) {
+            low++;
+        }
+        return low - 1;
     }
 };
-

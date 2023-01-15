@@ -11,21 +11,24 @@
  */
 class Solution {
 public:
-    void findBottomLeftValue(TreeNode* root, int& maxDep, int dep, int& Val){
-        if(root == NULL)return;
-        findBottomLeftValue(root->left, maxDep, dep+1, Val);
-        findBottomLeftValue(root->right, maxDep, dep+1, Val);
-        
-        if(dep > maxDep){
-             maxDep = dep;
-            Val = root->val;
+    int maxDepth(TreeNode* root) {
+        if(root==NULL){
+            return 0;
         }
+        int a=maxDepth(root->left);
+        int b=maxDepth(root->right);
         
+        return 1+max(a,b);
     }
     int findBottomLeftValue(TreeNode* root) {
-        int maxDep = 0;
-        int Val = root->val;
-        findBottomLeftValue(root, maxDep, 0, Val);
-        return Val;
+        if(root->left==NULL and root->right==NULL)
+            return root->val;
+        int lh = maxDepth(root->left);
+        int lr = maxDepth(root->right);
+        
+        if(lr>lh){
+            return findBottomLeftValue(root->right);
+        }
+        return findBottomLeftValue(root->left);
     }
 };

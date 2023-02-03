@@ -1,55 +1,54 @@
 class Solution {
 public:
+    bool hasCycle;
     
-    vector<int>find(unordered_map<int, vector<int>>adj, int n, vector<int>inD){
-        queue<int>q;
-        vector<int>ans;
-        int count = 0;
-        for(int i=0; i<n; i++){
-            if(inD[i] == 0){
-                ans.push_back(i);
-                count++;
-                q.push(i);
+    void dfs(unordered_map<int, vector<int>>&adj, vector<bool>&vis, vector<bool>&InRec, stack<int>&st, int u){
+        vis[u] = true;
+        InRec[u] = true;
+        
+        for(int &v:adj[u]){
+            if(InRec[v]==true){
+                hasCycle=true;
+                return;
+            }
+            if(!vis[v]){
+                dfs(adj, vis, InRec, st, v);
             }
         }
-        
-        while(!q.empty()){
-            int u = q.front();
-            q.pop();
-            
-            for(int &v:adj[u]){
-                inD[v]--;
-                
-                if(inD[v] == 0){
-                    ans.push_back(v);
-                    count++;
-                    q.push(v);
-                }
-            }
-        }
-        
-        if(count == n)
-            return ans;
-        
-        return {};
-        
+        st.push(u);
+        InRec[u] = false;
     }
     
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<bool>vis(numCourses, false);
+        vector<bool>InRec(numCourses, false);
         unordered_map<int, vector<int>>adj;
-        
-        vector<int>inD(numCourses, 0);
+        hasCycle = false;
         
         for(auto &vec: prerequisites){
             int a = vec[0];
             int b = vec[1];
-            
+
             adj[b].push_back(a);
-            
-            inD[a]++;
         }
         
-        return find(adj, numCourses, inD);
+        stack<int>st;
         
+        for(int i=0; i<numCourses; i++){
+            if(!vis[i]){
+                dfs(adj, vis, InRec, st, i);
+            }
+        }
+        
+        if(hasCycle == true){
+            return {};
+        }
+        
+        vector<int>ans;
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
     }
 };

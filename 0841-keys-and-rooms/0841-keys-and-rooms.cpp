@@ -1,45 +1,28 @@
 class Solution {
 public:
-    
-    void BFS(vector<vector<int>>& rooms, int u, vector<bool>&vis){
-        queue<int>q;
-        q.push(u);
-        vis[u] = true;
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            
-            for(auto &v:rooms[node]){
-                if(!vis[v]){
-                    q.push(v);
-                    vis[v] = true;
-                }
-            }
-        }
-    }
-    
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        unordered_map<int, vector<int> >adj;
         int n = rooms.size();
-        unordered_map<int, vector<int>>adj;
         vector<bool>vis(n, false);
-        // BFS(rooms, 0, vis);
-         queue<int>q;
+        queue<int>q;
+        int s = 0;
         q.push(0);
-        vis[0] = true;
+        vis[s] = true;
+        
         while(!q.empty()){
-            int node = q.front();
+            int temp = q.front();
             q.pop();
-            
-            for(auto &v:rooms[node]){
-                if(!vis[v]){
-                    q.push(v);
-                    vis[v] = true;
+            for(auto i:rooms[temp]){
+                if(!vis[i]){
+                    vis[i] = true;
+                    q.push(i);
                 }
             }
         }
         for(int i=0; i<n; i++){
             if(vis[i] == false){
                 return false;
+                break;
             }
         }
         return true;

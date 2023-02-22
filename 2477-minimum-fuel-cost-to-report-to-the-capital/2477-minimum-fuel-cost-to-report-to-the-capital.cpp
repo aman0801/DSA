@@ -1,48 +1,49 @@
 class Solution {
 public:
     
-    long long bfs(vector<vector<int> >&adj, vector<int>&degree, int s, int n){
-        queue<int>q;
-        for(int i=1; i<n; i++){
-            if(degree[i] == 1){
-                q.push(i);
+    long long ans = 0;
+    
+    int dfs(vector<vector<int>>& adj, int u, int seats, vector<bool>& vis)
+    {
+      
+        vis[u] = true;
+
+        int count = 1;
+        for(auto v : adj[u])
+        {
+            if(vis[v] == false)
+            {
+                count += dfs(adj, v, seats, vis);
             }
         }
         
-        vector<int>representatives(n, 1);
-        long long fuel = 0;
-        
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            
-            fuel += ceil((double)representatives[node] / s);
-            
-            for(auto &nei: adj[node]){
-                degree[nei]--;
-                representatives[nei] += representatives[node];
-                
-                if(degree[nei] == 1 && nei != 0){
-                    q.push(nei);
-                }
-            }
+        if(u != 0)
+        {
+            ans += ceil((double) count / seats);
         }
-        return fuel;
+        
+        return count;
     }
     
     long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
-        int n = roads.size()+1; //total no. nodes in tree
-        vector<vector<int> >adj(n);
-        vector<int>degree(n);
-        for(auto &road: roads){
-            adj[road[0]].push_back(road[1]);
-            adj[road[1]].push_back(road[0]);
+        
+        int n = roads.size();
+
+        vector<vector<int>> adj(n + 1);
+
+        for(int i = 0; i < n; i++)
+        {
+            int u = roads[i][0];
+            int v = roads[i][1];
             
-            degree[road[0]]++;
-            degree[road[1]]++;
+            adj[u].push_back(v); 
+            adj[v].push_back(u);
         }
         
-        return bfs(adj, degree, seats, n);
+        vector<bool> vis(n + 1, false);
+
+        dfs(adj, 0, seats, vis);
         
+        return ans;
     }
 };

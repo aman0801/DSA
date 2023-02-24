@@ -14,12 +14,13 @@ public:
             int temp = q.front();
             q.pop();
             vis[temp] = true;
-            // for(auto& i:isConnected[temp]){
-                for(int i=0; i<isConnected[temp].size(); i++){
-                if(!vis[i] && isConnected[temp][i] == 1){
-                     q.push(i);
-                    vis[i]=true;
+            int j=0;
+            for(auto& i:isConnected[temp]){
+                if(!vis[j] && i == 1){
+                     q.push(j);
+                    vis[j]=true;
                 }
+                j++;
             }
         }
             

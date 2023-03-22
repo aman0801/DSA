@@ -1,34 +1,51 @@
 class Solution {
 public:
     string reorganizeString(string s) {
-        //pq<data type,vector<data type>>pq;
-        priority_queue<vector<int>,vector<vector<int>>>pq;
-        int n=s.size();
-        vector<int>chars(26,0);
-        for(auto i:s){
-            chars[i-'a']++;
+        unordered_map<char, int>mp;
+        // vector<char>a(s.size());
+        string sol = s;
+        for(int i=0;i<s.length();i++){
+            mp[s[i]]++;
         }
-        for(int i=0;i<26;i++){
-            if(chars[i]>(n+1)/2){
-                return "";
-            }
-            pq.push({chars[i],i});
-        }
-        string ans=s;
-        int j=0;
-        while(!pq.empty()){
-            vector<int>temp=pq.top();
-            pq.pop();
-            int freq=temp[0];
-            char c=(char)('a'+temp[1]);
-            for(int i=0;i<freq;i++){
-                ans[j]=c;
-                j+=2;
-                if(j>=n){
-                    j=1;
-                }
+        
+        int max = 0;
+        char maxe = s[0];
+        for(auto i:mp){
+            if(max < i.second){
+                max = i.second;
+                maxe =i.first;
             }
         }
-        return ans;
+        if((max*2)-1> s.length()){
+            return "";
+        }
+        int i=0;
+        while(mp[maxe]>0){
+            // a.push_back(i);
+            s[i] = maxe;
+            i = i+2;
+            mp[maxe]--;
+        }
+        
+        for(auto j:mp){
+            while(j.second > 0){
+                if(i>=s.size())
+                    i=1;
+                s[i] = j.first;
+                // a.push_back(j.first);
+                j.second--;
+                i = i+2;
+            }
+        }
+        // for(int i=0; i<a.size(); i++){
+        //     if(a[i] == a[i+1]){
+        //         return "";
+        //     }
+        // }
+        // string ans;
+        // for (int j = 0; j < a.size(); i++) {
+        //      ans = ans + a[j];
+        //     }
+        return s;
     }
 };

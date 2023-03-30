@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> minOperations(string boxes) {
-        vector<int>ans(boxes.length());;
+        vector<int>ans;
         // int count = 0;
         
         for(int i=0; i<boxes.size(); i++){
@@ -11,7 +11,8 @@ public:
                     count = count + abs(i-j);
                 }
             }
-            ans[i] = count;
+            // ans[i] = count;
+            ans.push_back(count);
         }
         return ans;
     }

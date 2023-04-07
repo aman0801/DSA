@@ -6,7 +6,8 @@ public:
         while(last < length) {
             if(!visited[s[last]]) {
                 visited[s[last]] = true;
-                maxi = max(maxi, last++ - first + 1);
+                last++;
+                maxi = max(maxi, last - first );
             } else {
                 while(visited[s[last]])
                     visited[s[first++]] = false;

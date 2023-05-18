@@ -8,11 +8,17 @@ public:
         }
         
         if(open > 0){
-            solve(n, ans, output+'(', open-1, close);
+            output = output + '(';
+            // solve(n, ans, output+'(', open-1, close);
+            solve(n, ans, output, open-1, close);
+            output.pop_back();
         }
         
         if(open < close){
-            solve(n, ans, output+')', open, close-1);
+            output = output + ')';
+            // solve(n, ans, output+')', open, close-1);
+            solve(n, ans, output, open, close-1);
+            output.pop_back();
         }
         
     }

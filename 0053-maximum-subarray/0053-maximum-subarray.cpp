@@ -1,30 +1,32 @@
 class Solution {
 public:
     
-    int solve(vector<int>& nums, int l, int h){
-        if(l == h){
-            return nums[l];
+int solve(vector<int>& nums, int l, int r){
+        if(l == r){
+          return nums[l];  
         }
         
-        int la = INT_MIN;
-        int ra = INT_MIN;
-        int mid = (l + h) >> 1;
-        int sum = 0;
+        int mbls = INT_MIN;
+        int mbrs = INT_MIN;
+        int lbs = 0;
+        int rbs = 0;
+        int mid = l + (r - l)/2;
+        
+        int mls = solve(nums, l, mid);
+        int mrs = solve(nums, mid+1, r);
+        
         for(int i=mid; i>=l; i--){
-            sum = sum + nums[i];
-            la = max(la, sum);
+            lbs = lbs + nums[i];
+            mbls = max(mbls, lbs);
         }
-        sum=0;
-        for(int i=mid+1; i<=h; i++){
-            sum = sum + nums[i];
-            ra = max(ra, sum);
+        for(int i=mid+1; i<=r; i++){
+            rbs = rbs + nums[i];
+            mbrs = max(mbrs, rbs);
         }
         
-         int maxSumSubarray =  la+ra;
-        int leftAnsSum = solve(nums, l, mid);
-        int rightAnsSum = solve(nums, mid+1, h);
-
-        return max(maxSumSubarray, max(leftAnsSum, rightAnsSum));
+        int ans = mbls + mbrs;
+        
+        return max(mls, max(mrs, ans));
         
     }
     

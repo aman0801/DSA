@@ -11,29 +11,32 @@
  */
 class Solution {
 public:
-    void find(TreeNode* root, vector<int> &arr)
-    {
-        if(!root) return;
-        find(root->left,arr);
-        arr.push_back(root->val);
-        find(root->right,arr);        
-    }
-    TreeNode* ans(int s, int e, vector<int>&arr){
-        if(s>e)return NULL;
-        int mid = (s+e)/2;
+    
+    TreeNode* solve(TreeNode* root, vector<int>&res, int l, int h){
+        if(l>h) return nullptr;
+        int mid = l + ((h - l)/2);
         
-        TreeNode* node = new TreeNode(arr[mid]);
-        node->left = ans(s, mid-1, arr);
-        node->right = ans(mid+1, e, arr);
-        return node;
+        TreeNode* ans = new TreeNode(res[mid]);
+        ans->left = solve(root, res, l, mid-1);
+        ans->right = solve(root, res, mid+1, h);
+        return ans;
+        
     }
-    TreeNode* balanceBST(TreeNode* root) {
-        vector<int>arr;
-        find(root, arr);
-        for(int i=0;i<arr.size();i++){
-            cout<<arr[i];
+    
+    void insert(TreeNode* root, vector<int>&res){
+        if(root == NULL){
+            return;
         }
-        return ans(0, arr.size()-1, arr);
         
+         insert(root->left, res);
+         res.push_back(root->val);
+         insert(root->right, res);
+        
+    }
+    
+    TreeNode* balanceBST(TreeNode* root) {
+        vector<int>res;
+        insert(root, res);
+        return solve(root, res, 0, res.size()-1);
     }
 };

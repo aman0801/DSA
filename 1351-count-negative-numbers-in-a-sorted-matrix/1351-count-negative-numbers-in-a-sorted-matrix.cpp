@@ -13,14 +13,15 @@ public:
         }
     }
 
-    int negativeCount = 0;
-    for (const auto& pair : frequency) {
-        if (pair.first < 0) {
-            negativeCount += pair.second;
-        }
-    }
+    // int negativeCount = 0;
+    // for (const auto& pair : frequency) {
+    //     if (pair.first < 0) {
+    //         negativeCount += pair.second;
+    //     }
+    // }
 
-    return negativeCount;
+    // return negativeCount;
+      return count;
 }
 
 

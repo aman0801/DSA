@@ -5,11 +5,13 @@ public:
         string ans;
         for(int i=0; i<s.size(); i++){
             // if(st.empty()){
-                st.push(s[i]);
+                // st.push(s[i]);
             // }
             if(s[i] == '*'){
                 st.pop();
-                st.pop();
+                // st.pop();
+            }else{
+                st.push(s[i]);
             }
         }
         while(!st.empty()){

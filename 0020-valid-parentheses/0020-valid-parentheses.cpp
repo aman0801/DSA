@@ -1,16 +1,47 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<char> st;  //taking stack for keep tracking the order of the brackets..
-        for(auto i:s)  //iterate over each and every elements
-        {
-            if(i=='(' or i=='{' or i=='[') st.push(i);  //if current element of the string will be opening bracket then we will just simply push it into the stack
-            else  //if control comes to else part, it means that current element is a closing bracket, so check two conditions  current element matches with top of the stack and the stack must not be empty...
-            {
-                if(st.empty() or (st.top()=='(' and i!=')') or (st.top()=='{' and i!='}') or (st.top()=='[' and i!=']')) return false;
-                st.pop();  //if control reaches to that line, it means we have got the right pair of brackets, so just pop it.
+        stack<char>st;
+        if(s.size()%2!=0){
+            return false;
+        }
+        for(int i=0; i<s.size(); i++){
+            if(s[i] == '(' || s[i] == '{' || s[i] == '['){
+                st.push(s[i]);
+            }else if(st.empty() || st.top() == '(' && s[i] != ')'){
+                // st.pop();
+                return false;
+            }else if(st.empty() || st.top() == '{' && s[i] != '}'){
+                // st.pop();
+                return false;
+            }else if(st.empty() || st.top() == '[' && s[i] != ']'){
+                // st.pop();
+                return false;
+            }else{
+                st.pop();
             }
         }
-        return st.empty();  //at last, it may possible that we left something into the stack unpair so return checking stack is empty or not..
+        return st.empty();
     }
 };
+
+// stack<char> sack;
+//      int n = s.size();
+//      for(int i=0;i<n;i++)
+//      {   
+//          if(s[i]=='(' || s[i]=='{' || s[i]=='[')
+//          { 
+//            sack.push(s[i]);
+//            continue;
+//          }
+//          if(sack.empty())
+//              return false;
+//          char x = sack.top();
+//          if((x=='(' && s[i]==')') || (x=='{' && s[i]=='}') || (x=='[' && s[i]==']'))
+//              sack.pop();
+//          else
+//             return false;
+//      } 
+//      if(sack.empty())
+//          return true;
+//      return false;

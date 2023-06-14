@@ -11,31 +11,24 @@
  */
 class Solution {
 public:
-    vector<int>nums;
-    void solve(TreeNode* node) {
-        if (!node) {
+    TreeNode* prev = NULL;
+    int ans = INT_MAX;
+    
+    void solve(TreeNode* root){
+        if(root == NULL){
             return;
         }
         
-        solve(node->left);
-        
-        nums.push_back(node->val);
-        
-        solve(node->right);
+        solve(root->left);
+        if(prev!=NULL){
+            ans = min(ans, abs(prev->val-root->val));
+        }
+        prev = root;
+        solve(root->right);
     }
+    
     int getMinimumDifference(TreeNode* root) {
         solve(root);
-        sort(nums.begin(),nums.end());
-
-        int min=INT_MAX;
-
-        for(int i=nums.size()-1;i>0;i--){
-
-            if(nums[i]-nums[i-1]<min){
-
-                min=abs(nums[i]-nums[i-1]);}}
-
-        return min;
-
+        return ans;
     }
 };

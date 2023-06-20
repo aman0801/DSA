@@ -11,23 +11,35 @@
  */
 class Solution {
 public:
-    void getFlatten(TreeNode* root, vector<TreeNode*> &flattened)
-    {
-        if(!root) return;
-        flattened.push_back(root);
-        getFlatten(root->left,flattened);
-        getFlatten(root->right,flattened);        
-    }
-    void flatten(TreeNode* root) {
-        if(!root || !root->left && !root->right) return;
-        vector<TreeNode*> flattened;
-        getFlatten(root,flattened);
-        TreeNode* temp=root;
-        for(auto x:flattened)
-        {
-            temp->right=x;
-            temp->left=NULL;
-            temp=temp->right;
+    
+    vector<TreeNode*>ans;
+    
+    void solve(TreeNode* root){
+        if(root == NULL){
+            return;
         }
+        ans.push_back(root);
+        solve(root->left);
+        // ans.push_back(root);
+        solve(root->right);
+    }
+    
+    void flatten(TreeNode* root) {
+        
+        if(root==nullptr)
+            return;
+        
+        solve(root);
+        TreeNode* temp = nullptr;
+        TreeNode* temp2=root;
+        root=ans[0];
+        
+        for(int i=1;i<ans.size();i++)
+        {
+            root->right=ans[i];
+            root->left=nullptr;
+            root=root->right;
+        }      
+        
     }
 };

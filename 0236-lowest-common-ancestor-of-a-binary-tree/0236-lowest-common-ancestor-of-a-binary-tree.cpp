@@ -1,37 +1,37 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution {
 public:
+    bool path(TreeNode* root, vector<TreeNode*>& Path, TreeNode* target) {
+        if (root == NULL) {
+            return false;
+        }
+        
+        Path.push_back(root);
+        if (root == target) {
+            return true;
+        }
+        
+        if (path(root->left, Path, target) || path(root->right, Path, target)) {
+            return true;
+        }
+        
+        Path.pop_back();
+        return false;
+    }
+    
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root == NULL){
+        vector<TreeNode*> path1;
+        vector<TreeNode*> path2;
+        
+        if (!path(root, path1, p) || !path(root, path2, q)) {
             return NULL;
         }
         
-        if(root->val == p->val){
-            return p;
+        TreeNode* ans = NULL;
+        for (int i = 0; i < path1.size() && i < path2.size(); i++) {
+            if (path1[i] == path2[i]) {
+                ans = path2[i];
+            }
         }
-        if(root->val == q->val){
-            return q;
-        }
-        
-        TreeNode* Left = lowestCommonAncestor(root->left, p, q);
-        TreeNode* Right = lowestCommonAncestor(root->right, p, q);
-        
-        if(Left==NULL && Right==NULL){
-            return NULL;
-        }else if(Left!=NULL && Right==NULL){
-            return Left;
-        }else if(Left==NULL && Right!=NULL){
-            return Right;
-        }else{
-            return root;
-        }
+        return ans;
     }
 };

@@ -98,49 +98,54 @@ struct Node
 };
 */
 
-class Solution
-{
+class Solution {
 public:
+
+    void inorderTraversal(Node* root1, vector<int>& arr1){
+        if(root1 == NULL){
+            return;
+        }
+        inorderTraversal(root1->left, arr1);
+        arr1.push_back(root1->data);
+        inorderTraversal(root1->right, arr1);
+    }
+
+    void reverseInorderTraversal(Node* root2, vector<int>& arr2){
+        if(root2 == NULL){
+            return;
+        }
+        reverseInorderTraversal(root2->right, arr2);
+        arr2.push_back(root2->data);
+        reverseInorderTraversal(root2->left, arr2);
+    }
+
     int countPairs(Node* root1, Node* root2, int x)
     {
+        vector<int> arr1, arr2;
+        inorderTraversal(root1, arr1);
+        reverseInorderTraversal(root2, arr2);
+
         int count = 0;
-        stack<Node*>s1, s2;
-        Node*a = root1;
-        Node*b = root2;
-        while(1){
-            while(a){
-                s1.push(a);
-                a = a->left;
-            }
-            while(b){
-                s2.push(b);
-                b = b->right;
-            }
-            
-            if(s1.empty() || s2.empty()){
-                break;
-            }
-            auto atop = s1.top();
-            auto btop = s2.top();
-            int sum = 0;
-            sum = atop->data+btop->data;
-            if(sum == x){
+        int i = 0, j = 0;
+
+        while (i < arr1.size() && j < arr2.size()) {
+            if (arr1[i] + arr2[j] == x) {
                 count++;
-                s1.pop();
-                s2.pop();
-                a = atop->right;
-                b = btop->left;
-            }else if(sum<x){
-                s1.pop();
-                a = atop->right;
-            }else if(sum>x){
-                s2.pop();
-                b = btop->left;
+                i++;
+                j++;
+            }
+            else if (arr1[i] + arr2[j] < x) {
+                i++;
+            }
+            else {
+                j++;
             }
         }
+
         return count;
     }
 };
+
 
 
 //{ Driver Code Starts.

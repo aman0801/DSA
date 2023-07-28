@@ -1,18 +1,35 @@
 class Solution {
 public:
+        
+    bool binarySearch(vector<int> arr, int x) {
+	int l = 0, r = arr.size()-1;
+
+	while (l<=r) {
+		int mid = r-((r-l)/2);
+
+		if (arr[mid] == x)
+			return true;
+		else if (arr[mid] < x)
+			l = mid+1;
+		else
+			r = mid-1;
+	}
+
+	return false;
+}    
+        
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-            vector<int>ans;
-            set<int>store;
-        for(int i=0; i<nums1.size(); i++){
-                for(int j=0; j<nums2.size(); j++){
-                        if(nums1[i] == nums2[j]){
-                                store.insert(nums1[i]);
-                        }
+        vector<int> ans;
+	sort(nums1.begin(), nums1.end());
+	sort(nums2.begin(), nums2.end());
+            
+        for(int i=0; i<nums2.size(); i++){
+                if(i>0 && nums2[i] == nums2[i-1]){
+                        continue;
                 }
+                if (binarySearch(nums1, nums2[i]) && (ans.size() == 0 || ans.back()!=nums2[i]))
+			ans.push_back(nums2[i]);
         }
-            for(auto i:store){
-                    ans.push_back(i);
-            }
             return ans;
     }
 };

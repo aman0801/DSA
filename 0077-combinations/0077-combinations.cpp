@@ -1,25 +1,27 @@
 class Solution {
 public:
-    void solve(int n, int k, unordered_set<int>& out, vector<vector<int>>& ans, int countn) {
-        if (out.size() == k) {
-            ans.push_back(vector<int>(out.begin(), out.end()));
+    vector<vector<int>> result;
+    
+    void solve(int start, int n, int k, vector<int>& temp) {
+        if(k == 0) {
+            result.push_back(temp);
             return;
         }
-
-        if (countn > n) {
+        
+        if(start > n)
             return;
-        }
-
-        out.insert(countn);
-        solve(n, k, out, ans, countn + 1);
-        out.erase(countn);
-        solve(n, k, out, ans, countn + 1);
+        
+        temp.push_back(start);
+        solve(start+1, n, k-1, temp);
+        temp.pop_back();
+        solve(start+1, n, k, temp);
     }
-
+    
     vector<vector<int>> combine(int n, int k) {
-        unordered_set<int> out;
-        vector<vector<int>> ans;
-        solve(n, k, out, ans, 1);
-        return ans;
+        vector<int> temp;
+        
+        solve(1, n, k, temp);
+        
+        return result;
     }
 };

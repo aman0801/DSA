@@ -7,13 +7,13 @@ public:
         }
 
         string ans;
-        while (!freq.empty()) {
+        for (int i = 0; i < s.size(); ++i) {
             char maxChar = ' ';
             int maxFreq = 0;
-            for (auto it = freq.begin(); it != freq.end(); ++it) {
-                if (it->second > maxFreq) {
-                    maxChar = it->first;
-                    maxFreq = it->second;
+            for (const auto& entry : freq) {
+                if (entry.second > maxFreq) {
+                    maxChar = entry.first;
+                    maxFreq = entry.second;
                 }
             }
 

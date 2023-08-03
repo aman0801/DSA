@@ -13,24 +13,22 @@ using namespace std;
 class Solution{
     public:
     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
-    vector<int> ans;
-    int i = 0;
-    int j = 0;
-    while (i < n && j < m) {
-        if (a[i] > b[j]) {
-            ans.push_back(a[i++]);
-        } else {
-            ans.push_back(b[j++]);
+        // your code here
+        priority_queue<int>pq;
+        vector<int>ans;
+        for(auto &i:a){
+            pq.push(i);
         }
+        for(auto &i:b){
+            pq.push(i);
+        }
+        while(!pq.empty()){
+            int temp = pq.top();
+            pq.pop();
+            ans.push_back(temp);
+        }
+        return ans;
     }
-    while (i < n) {
-        ans.push_back(a[i++]);
-    }
-    while (j < m) {
-        ans.push_back(b[j++]);
-    }
-    return ans;
-}
 };
 
 //{ Driver Code Starts.

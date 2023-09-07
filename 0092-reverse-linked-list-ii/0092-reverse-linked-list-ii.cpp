@@ -1,39 +1,30 @@
 class Solution {
 public:
-    void insert(ListNode*& head, int val) {
-        ListNode* newNode = new ListNode(val);
-        if (head == nullptr) {
-            head = newNode;
-        } else {
-            ListNode* current = head;
-            while (current->next != nullptr) {
-                current = current->next;
-            }
-            current->next = newNode;
-        }
-    }
-
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        vector<int> arr;
-        ListNode* temp = head;
-        while (temp != nullptr) {
-            arr.push_back(temp->val);
-            temp = temp->next;
+        if(head == NULL || head->next == NULL) {
+            return head;
         }
-
-        left--;
-        right--;
-
-        while (left < right) {
-            swap(arr[left], arr[right]);
-            left++;
-            right--;
+        
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        
+        ListNode* prev = dummy;
+        
+        for(int i = 1; i<left; i++) {
+            prev = prev->next;
         }
-
-        ListNode* ans = nullptr;
-        for (int i = 0; i < arr.size(); i++) {
-            insert(ans, arr[i]);
+        
+        ListNode* curr = prev->next;
+        
+        for(int i = 1; i<=right-left; i++) {
+            
+            ListNode* temp = prev->next; 
+            prev->next = curr->next; 
+            curr->next = curr->next->next; 
+            prev->next->next = temp; 
+            
         }
-        return ans;
+    
+        return dummy->next;
     }
 };

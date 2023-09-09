@@ -1,34 +1,27 @@
 class Solution {
 public:
-    
-    void solve(vector<int>& arr, int k, int n, vector<int>& out, vector<vector<int>>& ans, int sum, int idx){
-        if(out.size() == k && sum == n){
-            ans.push_back(out);
-            return;
+    void CombinationSum(int ind, vector<int> &ds, vector<vector<int>> &ans, int target, int k, int n){
+        if(ds.size()==k){
+            if(target==0){
+                ans.emplace_back(ds);
+                return;
+            }
         }
-        
-        if(sum>n || out.size()>k){
-            return;
+        for(int i=ind;i<=9;i++){
+            if(ds.size()>=k && target!=0) break;
+            if(i>target) break;
+            ds.emplace_back(i);
+            CombinationSum(i+1, ds, ans, target-i, k, n);
+            ds.pop_back();
         }
-        
-        for(int i=idx; i<arr.size(); i++){
-            sum = sum + arr[i];
-            out.push_back(arr[i]);
-            solve(arr, k, n, out, ans, sum, i+1);
-            sum = sum - arr[i];
-            out.pop_back();
-        }
-        
     }
-    
     vector<vector<int>> combinationSum3(int k, int n) {
-        vector<int>arr;
-        for(int i=0; i<9; i++){
-            arr.push_back(i+1);
+        vector<vector<int>> ans;
+        vector<int> ds;
+        if(n<k){
+            return ans;
         }
-        vector<int>out;
-        vector<vector<int>>ans;
-        solve(arr, k, n, out, ans, 0, 0);
+        CombinationSum(1, ds, ans, n, k, n);
         return ans;
     }
 };

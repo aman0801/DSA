@@ -1,15 +1,15 @@
 class Solution {
-    //find the first position of target.....
+   
     int first_pos(int start , int end , vector<int>& nums , int target)
     {
-        int result = -1;    // make a variable to stroe the index of first occurance.
+        int result = -1;    
         while(start <= end)
         {
             int mid = start + (end - start)/2;  
             if(nums[mid] == target)
             { 
-                result = mid;  //if we find the target at mid position then we store the mid in result variable.
-                end = mid - 1;  //and continue to find the first occurance in the left of mid and if we find we update the result.
+                result = mid;  
+                end = mid - 1;  
             }
             else if(nums[mid] > target)
                 end = mid - 1;
@@ -19,17 +19,17 @@ class Solution {
         return result;
     }
     
-    //find the last position of target.....
+    
     int last_pos(int start , int end , vector<int>& nums , int target)
     {
-        int result = -1;    // make a variable to stroe the index of first occurance.
+        int result = -1;   
         while(start <= end) 
         {
             int mid = start + (end - start)/2;
             if(nums[mid] == target)
             {
-                result = mid;   //if we find the target at mid position then we store the mid in result variable.
-                start = mid + 1;    //and continue to find the last occurance in the right of mid and if we find we update the result.
+                result = mid;   
+                start = mid + 1;    
             }
             else if(nums[mid] >= target)
                 end = mid - 1;

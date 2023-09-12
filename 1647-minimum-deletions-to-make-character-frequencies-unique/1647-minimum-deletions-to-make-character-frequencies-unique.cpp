@@ -1,35 +1,20 @@
 class Solution {
 public:
-     int minDeletions(string s) {
-        unordered_map<char, int> mp;
-        for (auto& i : s) {
-            mp[i]++;
+    int minDeletions(string s) {
+        int freq[26] = {0};
+        unordered_set<int>st;
+        for(auto& i:s){
+            freq[i-'a']++;
         }
-
-        priority_queue<int> pq;
-        for (auto& kv : mp) {
-            pq.push(kv.second);
-        }
-
+        
         int count = 0;
-
-        while (!pq.empty()) {
-            int freq = pq.top();
-            pq.pop();
-
-            if(pq.empty()){
-                return count;
-            }
-            
-            if(freq == pq.top()){
+        for(int i=0; i<26; i++){
+            while(freq[i]>0 && st.find(freq[i])!=st.end()){
+                freq[i] = freq[i]-1;
                 count++;
-                if(freq>1){
-                    pq.push(freq-1);
-                }
             }
-            
+            st.insert(freq[i]);
         }
-
         return count;
     }
 };

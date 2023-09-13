@@ -31,9 +31,28 @@ public:
         
     }
     
+    int sol(vector<int>& nums, int n){
+        vector<int>dp(nums.size()+1, 0);
+        
+        dp[0] = nums[0];
+        
+        for(int i=1; i<=n; i++){
+            int temp = 0;
+            if(i-2>=0)
+                temp = dp[i-2];
+            
+            int inc = temp+nums[i];
+            int exc = dp[i-1];
+            
+            dp[i] = max(inc, exc);
+        }
+        return dp[n];
+    }
+    
     int rob(vector<int>& nums) {
         // return solve(nums, nums.size()-1);
-        vector<int>dp(nums.size(), INT_MIN);
-        return solve(nums, nums.size()-1, dp);
+        // vector<int>dp(nums.size(), INT_MIN);
+        // return solve(nums, nums.size()-1, dp);
+        return sol(nums, nums.size()-1);
     }
 };

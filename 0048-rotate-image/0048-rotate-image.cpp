@@ -1,23 +1,13 @@
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {
-        vector<vector<int>> ans = matrix;
-        
-        int rows = matrix.size();
-        int cols = matrix[0].size();
-        
-        
-        
-        for (int col = 0; col < cols; col++) {
-            vector<int>temp;
-            for (int row = 0; row < rows; row++) {
-                temp.push_back(matrix[row][col]);
-            }
-            reverse(temp.begin(), temp.end());
-            for(int row=0; row<rows; row++){
-                ans[col][row] = temp[row];
+        for(int i=0; i<matrix.size()-1; i++){
+            for(int j=i+1; j<matrix.size(); j++){
+                swap(matrix[i][j], matrix[j][i]);
             }
         }
-        matrix = ans;
+        for(int i=0; i<matrix.size(); i++){
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
     }
 };

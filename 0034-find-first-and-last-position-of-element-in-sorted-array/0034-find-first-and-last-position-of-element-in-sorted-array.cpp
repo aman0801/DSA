@@ -1,45 +1,50 @@
 class Solution {
 public:
     
-    int first(vector<int>& nums, int x, int low, int end){
+    int first(vector<int>& nums, int target){
+        int i=0;
+        int j=nums.size()-1;
         int ans = -1;
-        while(low<=end){
-            int mid = end-(end-low)/2;
+        while(i<=j){
+            int mid = (i+j)/2;
             
-            if(nums[mid] == x){
+            if(nums[mid] == target){
                 ans = mid;
-                end = mid-1;
-            }else if(nums[mid]>x){
-                end = mid-1;
+                j = mid-1;
+            }else if(nums[mid]>target){
+                j = mid-1;
             }else{
-                low = mid+1;
+                i = mid+1;
             }
         }
         return ans;
     }
     
-    int second(vector<int>& nums, int x, int low, int end){
+    int second(vector<int>& nums, int target){
+        int i=0;
+        int j=nums.size()-1;
         int ans = -1;
-        while(low<=end){
-            int mid = end-(end-low)/2;
+        while(i<=j){
+            int mid = (i+j)/2;
             
-            if(nums[mid] == x){
+            if(nums[mid] == target){
                 ans = mid;
-                low = mid+1;
-            }else if(nums[mid]>x){
-                end = mid-1;
+                i = mid+1;
+            }else if(nums[mid]<target){
+                i = mid+1;
             }else{
-                low = mid+1;
+                j = mid-1;
             }
         }
         return ans;
     }
     
     vector<int> searchRange(vector<int>& nums, int target) {
-        vector<int>ans(2);
-        ans[0] = first(nums, target, 0, nums.size()-1);
-        ans[1] = second(nums, target, 0, nums.size()-1);
-        if(ans.size() == 0)return {-1, -1};
+        vector<int>ans(2, -1);
+        ans[0] = first(nums, target);
+        ans[1] = second(nums, target);
+        
         return ans;
+        
     }
 };

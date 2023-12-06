@@ -1,33 +1,30 @@
 class Solution {
-        
-    public void solve(int i, int j, int[][] temp, int n, int m){
-            for(int col=0; col<m; col++){
-                    temp[i][col]=0;
-            }
-            for(int row=0; row<n; row++){
-                    temp[row][j]=0;
-            }
-    }    
-        
     public void setZeroes(int[][] matrix) {
-            int m = matrix[0].length;
-            int n = matrix.length;
+            ArrayList<Integer>x = new ArrayList<>();
+            ArrayList<Integer>y = new ArrayList<>();
             
-            int temp[][] = new int[n][m];
-            
-            for (int i = 0; i < n; i++) {
-            System.arraycopy(matrix[i], 0, temp[i], 0, m);
-        }
-            
-            for(int i=0; i<n; i++){
-                    for(int j=0; j<m; j++){
+            for(int i=0; i<matrix.length; i++){
+                    for(int j=0; j<matrix[0].length; j++){
                             if(matrix[i][j] == 0){
-                                    solve(i, j, temp, n, m);
+                                    x.add(i);
+                                    y.add(j);
                             }
                     }
             }
-             for (int i = 0; i < n; i++) {
-            System.arraycopy(temp[i], 0, matrix[i], 0, m);
-        }
+            
+//             for rows
+            for(int i=0; i<x.size(); i++){
+                    int idx = x.get(i);
+                    for(int j=0; j<matrix[0].length; j++){
+                            matrix[idx][j] = 0; 
+                    }
+            }
+//             for col
+            for(int i=0; i<y.size(); i++){
+                    int idx = y.get(i);
+                    for(int j=0; j<matrix.length; j++){
+                            matrix[j][idx] = 0;
+                    }
+            }
     }
 }

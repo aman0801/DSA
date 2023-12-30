@@ -1,15 +1,15 @@
 class Solution {
 public:
     bool makeEqual(vector<string>& words) {
-            unordered_map<char, int>mp;
+            vector<int> arr(26, 0);
             for(auto& i:words){
                     for(auto& j:i){
-                            mp[j]++;
+                            arr[j-'a']++;
                     }
             }
             
-            for(auto& i:mp){
-                    if(i.second%words.size()!=0){
+            for(auto& i:arr){
+                    if(i%words.size()!=0){
                             return 0;
                     }
             }

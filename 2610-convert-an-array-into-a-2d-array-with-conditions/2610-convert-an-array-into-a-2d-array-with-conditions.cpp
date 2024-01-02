@@ -1,27 +1,26 @@
 class Solution {
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
-        vector<vector<int>> ans;
-
-        for (int i = 0; i < nums.size(); i++) {
-            vector<int> out;  
-
             unordered_map<int, int> mp;
-
-            for (int j = i; j < nums.size(); j++) {
-                if (mp.find(nums[j]) == mp.end() && nums[j] != -1) {
-                    out.push_back(nums[j]);
-                    mp[nums[j]]++;
-                    nums[j] = -1;
-                }
+            vector<vector<int>> ans;
+            vector<int> out;
+            for(auto& i:nums){
+                    mp[i]++;
             }
-
-             if (!out.empty()) { 
-                mp.clear();
-                ans.push_back(out);
+            
+            unordered_map<int, int> temp;
+            while(!mp.empty()){
+                    temp = mp;
+                    out.clear();
+                    for(auto& i:temp){
+                            mp[i.first]--;
+                            out.push_back(i.first);
+                            if(mp[i.first] == 0){
+                                    mp.erase(i.first);
+                            }
+                    }
+                    ans.push_back(out);
             }
-        }
-
-        return ans;
+            return ans;
     }
 };

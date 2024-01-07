@@ -1,16 +1,22 @@
 class Solution {
 public:
-    int numberOfArithmeticSlices(vector<int>& nums) {
-            int count = 0;
-            int total = 0;
-            for(int i=2; i<nums.size(); i++){
-                    if(nums[i-1]-nums[i-2] == nums[i]-nums[i-1]){
-                            count++;
-                            total = total+count;
-                    }else{
-                            count=0;
-                    }
+        
+    int solve(vector<int>& nums, int count, int idx){
+            if(idx >= nums.size()-2){
+                    return 0;
             }
-            return total;
+            
+            if(nums[idx+2]-nums[idx+1]==nums[idx+1]-nums[idx]){
+                    count++;
+                    return count + solve(nums, count, idx+1);
+            }       
+            return solve(nums, 0, idx+1);
+    }    
+        
+    int numberOfArithmeticSlices(vector<int>& nums) {
+            if(nums.size()<3){
+                    return 0;
+            }
+            return solve(nums, 0, 0);
     }
 };

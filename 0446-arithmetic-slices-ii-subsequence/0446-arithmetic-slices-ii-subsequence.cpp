@@ -9,11 +9,11 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 long diff = static_cast<long>(nums[i]) - nums[j];
-                int count_at_j = mp[j][diff]; 
+                int count = mp[j][diff]; 
 
-                result += count_at_j;
+                result += count;
 
-                mp[i][diff] = mp[i][diff] + count_at_j + 1;
+                mp[i][diff] = mp[i][diff] + count + 1;
             }
         }
 

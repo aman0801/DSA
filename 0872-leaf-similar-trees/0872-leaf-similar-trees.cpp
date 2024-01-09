@@ -11,22 +11,18 @@
  */
 class Solution {
 public:
-        
-    void solve(TreeNode* root, vector<int>& tree){
-            if(root == NULL){
-                    return;
-            }
-            if(root->left == NULL && root->right == NULL){
-                    tree.push_back(root->val);
-            }
-            solve(root->left, tree);
-            solve(root->right, tree);
-    }    
-        
+
+    void dfs(TreeNode* root, string& s){
+        if(root){
+            if(!root->left and !root->right) s+=root->val;
+            dfs(root->left,s);
+            dfs(root->right,s);
+        }
+    }
+
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-            vector<int>tree1, tree2;
-            solve(root1, tree1);
-            solve(root2, tree2);
-            return tree1 == tree2;
+        string s1,s2;
+        dfs(root1,s1); dfs(root2,s2);
+        return s1==s2;
     }
 };

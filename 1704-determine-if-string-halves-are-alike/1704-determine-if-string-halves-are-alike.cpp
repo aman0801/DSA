@@ -1,17 +1,29 @@
 class Solution {
 public:
+    bool isVowel(char &ch) {
+        return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || 
+                ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U');
+    }
     bool halvesAreAlike(string s) {
-        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
-        int vowelsCount = 0;
-        int midIndex = s.length() / 2;
-
-        for (int i = 0; i < midIndex; i++) {
-            char charA = s[i];
-            char charB = s[midIndex + i];
-            if (vowels.count(charA)) vowelsCount++;
-            if (vowels.count(charB)) vowelsCount--;
+        int n = s.length();
+        
+        int mid = n/2;
+        
+        int i = 0, j = mid;
+        
+        int countL = 0;
+        int countR = 0;
+        
+        while(i < n/2 && j < n) {
+            if(isVowel(s[i])) countL++;
+            
+            if(isVowel(s[j])) countR++;
+            
+            i++;
+            j++;
         }
-
-        return vowelsCount == 0;
+        
+        
+        return countL == countR;
     }
 };

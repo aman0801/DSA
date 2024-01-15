@@ -21,12 +21,8 @@ public:
                             one.push_back(lose);
                     }
             }
-            if(one.size()>1){
                  sort(one.begin(), one.end());   
-            }
-            if(zero.size()>1){
                  sort(zero.begin(), zero.end());   
-            }
             
             return {zero, one};
     }

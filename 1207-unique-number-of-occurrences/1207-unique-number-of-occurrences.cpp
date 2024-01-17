@@ -1,25 +1,16 @@
 class Solution {
 public:
     bool uniqueOccurrences(vector<int>& arr) {
-            sort(arr.begin(), arr.end());
-            vector<int>vec;
-            for(int i=0; i<arr.size(); i++){
-                    int cnt = 1;
-
-            while(i + 1 < arr.size() && arr[i] == arr[i + 1]) {
-                    cnt++;
-                    i++;
+            vector<int>ans(2001, 0);
+            for(auto& i:arr){
+                    ans[i+1000]++;
             }
-                    vec.push_back(cnt);
-            }
-            sort(vec.begin(), vec.end());
-            
-            for (int i = 1; i < vec.size(); i++) {
-                    if (vec[i] == vec[i - 1]) {
+            sort(ans.begin(), ans.end());
+            for(int i=1; i<2001; i++){
+                    if(ans[i]!=0 && ans[i]==ans[i-1]){
                             return false;
                     }
             }
-
-        return true;
+            return true;
     }
 };

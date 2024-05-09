@@ -1,28 +1,15 @@
 class Solution {
 public:
     long long maximumHappinessSum(vector<int>& happiness, int k) {
-            sort(happiness.begin(), happiness.end());
-            long long ans=0;
-            int i=happiness.size()-1;
-            int count = 0;
-            while(i>=0 && k>0){
-                    if(happiness[i]-count<0){
-                            break;
-                    }else{
-                            if(i==happiness.size()-1){
-                                    ans = ans + happiness[i];
-                                    cout << ans << "first";
-                            }else{
-                                    if(happiness[i]-1>0){
-                                            ans = ans + happiness[i] - count;
-                                            cout << ans << "second";
-                                    }else{
-                                            break;
-                                    }
-                            }
-                    }
-                    k--;
-                    i--;
+            priority_queue<int> pq;
+            for(auto& it:happiness){
+                    pq.push(it);
+            }
+            long long ans = 0;
+            int count=0;
+            for(int i=0; i<k; i++){
+                    ans = ans + max(pq.top()-count, 0);
+                    pq.pop();
                     count++;
             }
             return ans;
